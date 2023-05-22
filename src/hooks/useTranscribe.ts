@@ -87,7 +87,11 @@ const useTranscribe = () => {
 
   useEffect(() => {
     const index = transcript.length - 1;
-    if (transcript.length > 0 && prevTranscript !== transcript[index]) {
+    if (
+      transcript.length > 0 &&
+      prevTranscript !== transcript[index] &&
+      transcript[index].endsWith(".")
+    ) {
       console.log("translate", transcript[index]);
 
       const command = new TranslateTextCommand({
@@ -106,7 +110,7 @@ const useTranscribe = () => {
       });
       setPrevTranscript(transcript[index]);
     }
-  }, [transcript]);
+  }, [prevTranscript, transcript, translateClient]);
 
   return {
     start: () => {
